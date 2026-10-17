@@ -153,4 +153,4 @@ Outras ferramentas da mesma pesquisa Café com Solda citadas acima:
 - [ChaosID](https://github.com/cybersantana83/ChaosID) — forense de cartões no Flipper Zero (`cards_db` compartilhado)
 - [fido2-nfc-scanner](https://github.com/cybersantana83/fido2-nfc-scanner) — FAP de Flipper Zero com o mesmo reconhecimento FIDO2/CTAP2
 
-> Este firmware já divergiu o suficiente do upstream que deixou de ser mantido como fork no GitHub — se você está lendo isso num repositório ainda marcado como fork, a migração pra um repositório independente está em andamento.
+> Este firmware já divergiu o suficiente do upstream que deixou de ser mantido como fork no GitHub — vive em [cybersantana83/chaos-nfc](https://github.com/cybersantana83/chaos-nfc), um repositório independente.

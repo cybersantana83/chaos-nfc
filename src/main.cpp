@@ -1282,8 +1282,6 @@ void drawAboutPage(lgfx::v1::LGFXBase& d, int x, int y, int w, int h, uint16_t a
     d.setTextColor(TFT_WHITE, TFT_BLACK);
     d.setCursor(x + 2 + indent, ty); d.print("Cafe com Solda");
   } else {
-    // TODO: update once the independent repo exists (this firmware is no
-    // longer meant to live as a fork - see README "Credits" section).
     const char* url = "github.com/cybersantana83/chaos-nfc";
     const int qr_size = max(24, min(w, h));
     const int qr_x = x + (w - qr_size) / 2;

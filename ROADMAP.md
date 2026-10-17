@@ -1,9 +1,12 @@
-# Fork Roadmap — GroveNFC → Console de Operações NFC
+# Roadmap — Chaos NFC (Café com Solda)
 
-Fork de [whywilson/GroveNFC](https://github.com/whywilson/GroveNFC).
-Objetivo: sair de "demo de referência" pra base única onde consolidar os
-projetos de NFC/EMV que hoje vivem espalhados em `.fap` do Flipper e scripts
-Python soltos.
+Histórico de decisões desde que este firmware começou como fork de
+[whywilson/GroveNFC](https://github.com/whywilson/GroveNFC) — hoje vive em
+[cybersantana83/chaos-nfc](https://github.com/cybersantana83/chaos-nfc),
+repositório independente (ver README, seção Créditos).
+Objetivo original: sair de "demo de referência" pra base única onde
+consolidar os projetos de NFC/EMV que hoje vivem espalhados em `.fap` do
+Flipper e scripts Python soltos.
 
 ## Por que forkar em vez de contribuir upstream
 
