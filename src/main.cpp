@@ -105,6 +105,14 @@ constexpr bool kAutoBootDebug =
 ;
 constexpr uint32_t kBootDebugShowMs = 2500;
 constexpr uint8_t kSpeakerVolume = 160;
+
+// [FORK] Cafe com Solda visual identity: black background (set in drawScreen())
+// plus this cream/red/beige/green accent set, replacing the generic
+// green/cyan/yellow/blue page colors inherited from upstream GroveNFC.
+constexpr uint16_t kAccentCream = 0xF718;  // #F2E3C6 - coffee foam cream
+constexpr uint16_t kAccentRed   = 0xE1C5;  // #E03A2E - solder-spark red
+constexpr uint16_t kAccentBeige = 0xCCCD;  // #C89B6B - roasted bean beige
+constexpr uint16_t kAccentGreen = 0x4D2B;  // #4EA75A - PCB/circuit green
 #if defined(APP_TARGET_CARDPUTER) || defined(APP_TARGET_CARDPUTER_ADV)
 constexpr uint32_t kHoldPressMs = 320;
 constexpr uint32_t kNfcBootPowerSettleMs = 220;
@@ -475,7 +483,7 @@ void drawHoldProgressBar(uint8_t pct) {
   const int y = d.height() - bar_h;
   const int filled_w = static_cast<int>((static_cast<uint32_t>(w) * pct) / 100);
   if (filled_w > 0) {
-    d.fillRect(0, y, filled_w, bar_h, TFT_CYAN);
+    d.fillRect(0, y, filled_w, bar_h, kAccentCream);
   }
   if (filled_w < w) {
     d.fillRect(filled_w, y, w - filled_w, bar_h, TFT_BLACK);
@@ -1256,11 +1264,11 @@ void drawAboutPage(lgfx::v1::LGFXBase& d, int x, int y, int w, int h, uint16_t a
   } else if (page_idx == 1) {
     int ty = y + 4;
     d.setTextColor(accent, TFT_BLACK);
-    d.setCursor(x + 2, ty); d.print("Fork"); ty += line_h;
+    d.setCursor(x + 2, ty); d.print("Project"); ty += line_h;
     d.setTextColor(TFT_WHITE, TFT_BLACK);
     d.setCursor(x + 2 + indent, ty); d.print("cybersantana83"); ty += line_h;
     d.setTextColor(accent, TFT_BLACK);
-    d.setCursor(x + 2, ty); d.print("Base project"); ty += line_h;
+    d.setCursor(x + 2, ty); d.print("Built on"); ty += line_h;
     d.setTextColor(TFT_WHITE, TFT_BLACK);
     d.setCursor(x + 2 + indent, ty); d.print("whywilson/GroveNFC");
   } else if (page_idx == 2) {
@@ -1274,7 +1282,9 @@ void drawAboutPage(lgfx::v1::LGFXBase& d, int x, int y, int w, int h, uint16_t a
     d.setTextColor(TFT_WHITE, TFT_BLACK);
     d.setCursor(x + 2 + indent, ty); d.print("Cafe com Solda");
   } else {
-    const char* url = "github.com/cybersantana83/GroveNFC";
+    // TODO: update once the independent repo exists (this firmware is no
+    // longer meant to live as a fork - see README "Credits" section).
+    const char* url = "github.com/cybersantana83/chaos-nfc";
     const int qr_size = max(24, min(w, h));
     const int qr_x = x + (w - qr_size) / 2;
     const int qr_y = y + (h - qr_size) / 2;
@@ -1778,11 +1788,11 @@ static void drawM5PaperAboutPage() {
   g_canvas.printf("Module: %s  %s", displayModuleName(nfc_module_name).c_str(), nfc_port_name.c_str());
   g_canvas.setCursor(28, 896);
   g_canvas.printf("HW:%04X  FW:%04X", hw_ver, fw_ver);
-  // [FORK] Credits: cybersantana83 fork (base whywilson/GroveNFC), FIDO2
-  // recognition ported from ChaosID/fido2-nfc-scanner, Cafe com Solda brand.
+  // [FORK] Credits: Cafe com Solda project (cybersantana83), built on
+  // whywilson/GroveNFC, FIDO2 recognition ported from ChaosID/fido2-nfc-scanner.
   g_canvas.setTextSize(1);
   g_canvas.setCursor(28, 924);
-  g_canvas.print("Fork: cybersantana83 (base whywilson/GroveNFC)");
+  g_canvas.print("Cafe com Solda | built on whywilson/GroveNFC");
   g_canvas.setCursor(28, 940);
   g_canvas.print("FIDO2: ChaosID/fido2-nfc-scanner  |  Cafe com Solda");
 }
@@ -1799,13 +1809,14 @@ void drawScreen(bool popup_only) {
   const int w = d.width();
   const int h = d.height();
 
-  uint16_t accent = TFT_GREEN;
-  if (menu_page == MenuPage::ReadNDEF) accent = TFT_CYAN;
-  if (menu_page == MenuPage::Diagnose) accent = TFT_YELLOW;
-  if (menu_page == MenuPage::About) accent = TFT_CYAN;
-  if (menu_page == MenuPage::EmvReader) accent = TFT_YELLOW;
-  if (menu_page == MenuPage::Fido2) accent = TFT_BLUE;
-  // Unit NFC and GroveNFC share the same color mapping.
+  uint16_t accent = kAccentGreen;
+  if (menu_page == MenuPage::ReadNDEF) accent = kAccentCream;
+  if (menu_page == MenuPage::Diagnose) accent = kAccentBeige;
+  if (menu_page == MenuPage::About) accent = kAccentCream;
+  if (menu_page == MenuPage::EmvReader) accent = kAccentBeige;
+  if (menu_page == MenuPage::Fido2) accent = kAccentRed;
+  // Both supported chips (ST25R3916/"Unit NFC" and WS1850S) share this
+  // same Cafe com Solda color mapping.
 
 #ifdef APP_TARGET_M5PAPER
   if (!in_home && menu_page == MenuPage::Reader) {
